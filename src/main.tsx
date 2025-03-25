@@ -5,8 +5,8 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import 'mdb-react-ui-kit/dist/css/mdb.min.css';
 
 const Login = React.lazy(() => import("./Pages/Auth/Login1"));
-const App = React.lazy(() => import("./Layout/App"));
-
+// const App = React.lazy(() => import("./Layout/App"));
+const App = React.lazy(() => import("./Pages/Users/Users"));
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
