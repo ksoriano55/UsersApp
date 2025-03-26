@@ -1,42 +1,49 @@
 import React from 'react';
+import { useNavigate } from "react-router-dom"; 
 import {
-  MDBBtn,
   MDBContainer,
-  MDBRow,
   MDBCol,
+  MDBRow,
+  MDBBtn,
   MDBIcon,
-  MDBInput
+  MDBInput,
 }
 from 'mdb-react-ui-kit';
 import "./login.css"
 function App() {
+  const navigate = useNavigate();
+
+  const handleLogin = () => {
+    navigate("/home");
+  };
   return (
-    <MDBContainer fluid className="d-flex align-items-center justify-content-center vh-100 p-3">
+    <MDBContainer fluid className="p-3 my-5">
       <MDBRow>
-        <MDBCol sm='6'>
-          <div className='d-flex flex-row ps-1 pt-1'>
-            <MDBIcon fas icon="crow fa-3x me-3" style={{ color: '#709085' }}/>
-            <span className="h1 fw-bold mb-0">Logo</span>
-          </div>
-
-          <div className='d-flex flex-column justify-content-center h-custom-2 w-75 pt-4'>
-
-            <h3 className="fw-normal mb-3 ps-5 pb-3" style={{letterSpacing: '1px'}}>Log in</h3>
-
-            <MDBInput wrapperClass='mb-4 mx-5 w-100' label='Email address' id='formControlLg' type='email' size="lg"/>
-            <MDBInput wrapperClass='mb-4 mx-5 w-100' label='Password' id='formControlLg' type='password' size="lg"/>
-
-            <MDBBtn className="mb-4 px-5 mx-5 w-100" color='info' size='lg'>Login</MDBBtn>
-            <p className="small mb-5 pb-lg-3 ms-5"><a className="text-muted" href="#!">Forgot password?</a></p>
-            <p className='ms-5'>Don't have an account? <a href="#!" className="link-info">Register here</a></p>
-
-          </div>
-
+        <MDBCol col='10' md='6'>
+          <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-login-form/draw2.svg" className="img-fluid" alt="Phone image" />
         </MDBCol>
 
-        <MDBCol sm='6' className='d-none d-sm-block px-0'>
-          <img src="https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.hdwallpapers.in%2Ftechnology_blue_circuit_board_4k_hd_technology-wallpapers.html&psig=AOvVaw1vEXe_VezR79RAQXar3vtj&ust=1742964631463000&source=images&cd=vfe&opi=89978449&ved=0CBQQjRxqFwoTCIDM8LO3pIwDFQAAAAAdAAAAABAE"
-            alt="Login image" className="w-100 h-100 " style={{ objectFit: 'cover', objectPosition: 'center' }} />
+        <MDBCol col='4' md='6'>
+          <MDBInput wrapperClass='mb-4' label='Usuario' id='formControlLg' type='text' size="lg"/>
+          <MDBInput wrapperClass='mb-4' label='Contraseña' id='formControlLg' type='password' size="lg"/>
+
+
+          {/* <div className="d-flex justify-content-between mx-4 mb-4">
+            <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
+            <a href="!#">Forgot password?</a>
+          </div> */}
+
+          <MDBBtn className="mb-4 w-100" size="lg" onClick={handleLogin}>Iniciar Sesión</MDBBtn>
+
+          <div className="divider d-flex align-items-center my-4">
+            <p className="text-center fw-bold mx-3 mb-0">Ó</p>
+          </div>
+
+          <MDBBtn className="mb-4 w-100" size="lg" style={{backgroundColor: '#3b5998'}}>
+            <MDBIcon fab icon="facebook-f" className="mx-2"/>
+            Registrate
+          </MDBBtn>
+
         </MDBCol>
 
       </MDBRow>
