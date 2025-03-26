@@ -7,5 +7,6 @@ export interface IUsers{
     Address: string,
     Phone: string,
     Email: string,
-    Status: boolean
+    Status: boolean,
+    ConfirmPassword?: string
 }
