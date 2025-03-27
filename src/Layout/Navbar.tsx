@@ -1,4 +1,3 @@
-import React from "react";
 import { useNavigate } from "react-router-dom"; // Para redirigir al usuario
 import "./Navbar.css"; // Archivo CSS para los estilos
 
