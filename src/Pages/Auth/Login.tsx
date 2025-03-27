@@ -30,48 +30,26 @@ function App() {
     const passValue = (document.getElementById('txtPass') as HTMLInputElement)?.value;
 
     if(userValue === "" || passValue === "" || userValue === undefined || passValue === undefined){
-      Swal.fire({
-        position: "top-start",
-        icon: "warning",
-        title: "Favor ingrese usuario y contraseña",
-        showConfirmButton: false,
-        timer: 1500
-      });
+      Swal.fire({ icon: 'warning', title: 'Favor ingrese usuario y contraseña', timer: 1500 });
       return;
     }
 
     const user = users.find(x => x.UserName === userValue);
     
     if(user === undefined){
-      Swal.fire({
-        position: "top-start",
-        icon: "error",
-        title: "Usuario no encontrado",
-        showConfirmButton: false,
-        timer: 1500
-      });
+      Swal.fire({ icon: 'error', title: 'Usuario no encontrado', timer: 1500 });
+      
       return;
     }
 
     if(user.Status === false){
-      Swal.fire({
-        position: "top-start",
-        icon: "error",
-        title: "Usuario Inactivo",
-        showConfirmButton: false,
-        timer: 1500
-      });
+      Swal.fire({ icon: 'error', title: 'Usuario Inactivo', timer: 1500 });
       return;
     }
 
     if(user.Password !== passValue){
-      Swal.fire({
-        position: "top-start",
-        icon: "error",
-        title: "Credenciales incorrectas",
-        showConfirmButton: false,
-        timer: 1500
-      });
+      Swal.fire({ icon: 'error', title: 'Credenciales incorrectas', timer: 1500 });
+      
       return;
     }
 
@@ -91,11 +69,6 @@ function App() {
           <MDBInput wrapperClass='mb-4' label='Contraseña' id='txtPass' type='password' size="lg" />
 
           <MDBBtn className="mb-4 w-100" size="lg" onClick={handleLogin}>Iniciar Sesión</MDBBtn>
-
-          <div className="divider d-flex align-items-center my-4">
-            <p className="text-center fw-bold mx-3 mb-0">Ó</p>
-          </div>
-
         </MDBCol>
 
       </MDBRow>
