@@ -1,4 +1,5 @@
 export interface IUsers{
+    firestoreId?: string;
     UserId: string,
     UserName: string,
     Password: string,

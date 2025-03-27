@@ -6,9 +6,10 @@ export const getUsersFromFirestore = async (): Promise<any[]> => {
     try {
         const usersCollection = collection(db, 'Users');
         const querySnapshot = await getDocs(usersCollection);
-
+        console.log("lista: ", querySnapshot.docs)
         const usersList = querySnapshot.docs.map((doc) => ({
-            UserId: doc.id,
+            firestoreId: doc.id,
+            
             ...doc.data(),
         }));
         console.log("Respuesta de Firebase: ", usersList)
@@ -22,9 +23,9 @@ export const getUsersFromFirestore = async (): Promise<any[]> => {
 export const addUserToFirestore = async (user: IUsers) => {
     try {
 
-        const usersCollection = collection(db, 'Users'); // Asegúrate que sea tu colección correcta
+        const usersCollection = collection(db, 'Users');
         const docRef = await addDoc(usersCollection, user);
-        return docRef.id;
+        return docRef;
     } catch (error) {
         console.error('Error al insertar usuarios:', error);
         throw error;
@@ -32,11 +33,10 @@ export const addUserToFirestore = async (user: IUsers) => {
 
 };
 
-export const updateUserInFirestore = async (userId: string, user: IUsers) => {
+export const updateUserInFirestore = async (docId: string, user: Partial<IUsers>) => {
     try {
-        debugger
-        const userRef = doc(db, 'Users', userId);
-        await updateDoc(userRef, user as any);
+        const userRef = doc(db, 'Users', docId);
+  await updateDoc(userRef, user);
     }
     catch (error) {
         console.error('Error al actualizar usuarios:', error);

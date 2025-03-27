@@ -1,5 +1,5 @@
-import React from 'react';
-import { useNavigate } from "react-router-dom"; 
+import React, { useEffect, useState } from 'react';
+import { useNavigate } from "react-router-dom";
 import {
   MDBContainer,
   MDBCol,
@@ -8,12 +8,76 @@ import {
   MDBIcon,
   MDBInput,
 }
-from 'mdb-react-ui-kit';
+  from 'mdb-react-ui-kit';
 import "./login.css"
+import { getUsersFromFirestore } from '../../Firebase/UsersServices';
+import { IUsers } from '../../Interfaces/IUsers';
+import Swal from 'sweetalert2';
 function App() {
   const navigate = useNavigate();
+  const [users, setUsers] = useState<IUsers[]>([]);
+
+  const fetchUsers = async () => {
+    const fetchedUsers = await getUsersFromFirestore();
+    setUsers(fetchedUsers);
+  };
+
+  useEffect(() => {
+    fetchUsers();
+  }, [])
 
   const handleLogin = () => {
+    const userValue = (document.getElementById('txtUser') as HTMLInputElement)?.value;
+    const passValue = (document.getElementById('txtPass') as HTMLInputElement)?.value;
+
+    if(userValue === "" || passValue === "" || userValue === undefined || passValue === undefined){
+      Swal.fire({
+        position: "top-start",
+        icon: "warning",
+        title: "Favor ingrese usuario y contraseña",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    }
+
+    const user = users.find(x => x.UserName === userValue);
+    
+    if(user === undefined){
+      Swal.fire({
+        position: "top-start",
+        icon: "error",
+        title: "Usuario no encontrado",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    }
+
+    if(user.Status === false){
+      Swal.fire({
+        position: "top-start",
+        icon: "error",
+        title: "Usuario Inactivo",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    }
+
+    if(user.Password !== passValue){
+      Swal.fire({
+        position: "top-start",
+        icon: "error",
+        title: "Credenciales incorrectas",
+        showConfirmButton: false,
+        timer: 1500
+      });
+      return;
+    }
+
+    localStorage.setItem('userName', user.UserName);
+
     navigate("/home");
   };
   return (
@@ -24,8 +88,8 @@ function App() {
         </MDBCol>
 
         <MDBCol col='4' md='6'>
-          <MDBInput wrapperClass='mb-4' label='Usuario' id='formControlLg' type='text' size="lg"/>
-          <MDBInput wrapperClass='mb-4' label='Contraseña' id='formControlLg' type='password' size="lg"/>
+          <MDBInput wrapperClass='mb-4' label='Usuario' id='txtUser' type='text' size="lg" />
+          <MDBInput wrapperClass='mb-4' label='Contraseña' id='txtPass' type='password' size="lg" />
 
 
           {/* <div className="d-flex justify-content-between mx-4 mb-4">
@@ -38,11 +102,6 @@ function App() {
           <div className="divider d-flex align-items-center my-4">
             <p className="text-center fw-bold mx-3 mb-0">Ó</p>
           </div>
-
-          <MDBBtn className="mb-4 w-100" size="lg" style={{backgroundColor: '#3b5998'}}>
-            <MDBIcon fab icon="facebook-f" className="mx-2"/>
-            Registrate
-          </MDBBtn>
 
         </MDBCol>
 

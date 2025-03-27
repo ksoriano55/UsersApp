@@ -6,6 +6,7 @@ const Header = ({ usuario }: any) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
+    localStorage.setItem("userName", "");
     navigate("/");
   };
 
