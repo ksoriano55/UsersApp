@@ -27,7 +27,6 @@ function Users() {
   const handleShow = () => setShow(true);
   const handleClose = () => {
     setShow(false);
-    // Limpiar formulario
     setNewUser({
       UserId: '',
       UserName: '',
@@ -48,14 +47,13 @@ function Users() {
   };
 
   useEffect(() => {
-    if(localStorage.getItem('userName') === null || localStorage.getItem('userName') === ""){
+    if (localStorage.getItem('userName') === null || localStorage.getItem('userName') === "") {
       window.location.href = "/";
     }
     fetchUsers();
   }, []);
 
   const handleResetChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    console.log("e: ", e.target.checked);
     setResetPassword(e.target.checked);
   }
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,10 +66,8 @@ function Users() {
 
   const handleSaveUser = async () => {
     try {
-      debugger
 
       if (newUser.firestoreId) {
-        // Actualiza el usuario en Firestore
         const { firestoreId, ConfirmPassword, ...userToUpdate } = newUser;
         await updateUserInFirestore(firestoreId, userToUpdate);
         Swal.fire({ icon: 'success', title: 'Usuario actualizado', timer: 1500 });
@@ -85,11 +81,8 @@ function Users() {
           });
           return;
         }
-        // Genera un ID temporal mientras Firebase responde
         const newUserWithTempId = { ...newUser, UserId: Date.now().toString() };
 
-
-        // Guarda en Firestore
         await addUserToFirestore(newUserWithTempId).then(resp => {
           if (resp) {
             Swal.fire({
@@ -111,20 +104,15 @@ function Users() {
         });
       }
 
-
-
-
-
       fetchUsers();
     } catch (error) {
-      debugger
       console.error("Error al guardar en Firebase:", error);
     }
   };
 
   const handleEditUser = (user: IUsers) => {
     setNewUser(user);
-    setShow(true); // Muestra el modal con la info cargada
+    setShow(true);
   };
 
   const handleDeleteUser = async (userId: string) => {
@@ -139,7 +127,7 @@ function Users() {
       if (result.isConfirmed) {
         await deleteUserFromFirestore(userId);
         Swal.fire('Eliminado', 'El usuario ha sido eliminado.', 'success');
-        fetchUsers(); // Recargar la tabla
+        fetchUsers();
       }
     });
   };
@@ -210,7 +198,7 @@ function Users() {
         />
       </div>
 
-      {/* ✅ MODAL CON FORMULARIO COMPLETO */}
+      {/* Modal para registrar o editar usuario */}
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Registrar Usuario</Modal.Title>
@@ -248,10 +236,7 @@ function Users() {
                     onChange={handleResetChange}
                   />
                 </Form.Group>
-
-              )
-
-              }
+              )}
 
               {newUser.UserId && resetPassword && (
                 <>
@@ -274,8 +259,7 @@ function Users() {
                     </Form.Group>
                   </Col>
                 </>
-              )
-              }
+              )}
 
               {!newUser.UserId && (
                 <>
@@ -298,8 +282,7 @@ function Users() {
                     </Form.Group>
                   </Col>
                 </>
-              )
-              }
+              )}
 
             </Row>
             <Row>

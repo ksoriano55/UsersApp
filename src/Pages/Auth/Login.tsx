@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from "react-router-dom";
 import {
   MDBContainer,
   MDBCol,
   MDBRow,
   MDBBtn,
-  MDBIcon,
   MDBInput,
 }
   from 'mdb-react-ui-kit';
@@ -90,12 +89,6 @@ function App() {
         <MDBCol col='4' md='6'>
           <MDBInput wrapperClass='mb-4' label='Usuario' id='txtUser' type='text' size="lg" />
           <MDBInput wrapperClass='mb-4' label='Contraseña' id='txtPass' type='password' size="lg" />
-
-
-          {/* <div className="d-flex justify-content-between mx-4 mb-4">
-            <MDBCheckbox name='flexCheck' value='' id='flexCheckDefault' label='Remember me' />
-            <a href="!#">Forgot password?</a>
-          </div> */}
 
           <MDBBtn className="mb-4 w-100" size="lg" onClick={handleLogin}>Iniciar Sesión</MDBBtn>
 
